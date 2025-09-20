@@ -1,754 +1,392 @@
-// Chart.js Configuration and Data Visualization
+// DOM Elements
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
+const navLinks = document.querySelectorAll('.nav-link');
 
-// Global Chart.js configuration
-Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-Chart.defaults.font.size = 12;
-Chart.defaults.plugins.legend.display = true;
-Chart.defaults.plugins.legend.position = 'top';
-
-// Initialize all charts when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initializeCharts();
+// Mobile Navigation Toggle
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
 });
 
-function initializeCharts() {
-    // Story 1: Weather Delay Charts
-    createWeatherDelayChart();
-    createAvgWeatherDelayChart();
-    
-    // Story 2: Holiday Charts
-    createHolidayVolumeChart();
-    createHolidayDelayChart();
-    
-    // Story 3: Duration Charts
-    createDurationVolumeChart();
-    createDurationDelayChart();
-    
-    // Story 4: Business Travel Charts
-    createWeekdayDelayChart();
-    createWeekdayVolumeChart();
-    createHourlyPatternsChart();
-    createBusinessPeakChart();
-    
-    // Story 5: COVID Impact Charts
-    createCovidVolumeChart();
-    createRecoveryTrendChart();
-    
-    // Story 6: Tech Corridor Charts
-    createTechDestinationsChart();
-    createTechDelayComparisonChart();
-    createTechYearlyTrendChart();
-    createTechWeekdayChart();
-}
-
-// Story 1: Weather Delay Charts
-function createWeatherDelayChart() {
-    const ctx = document.getElementById('weatherDelayChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Summer Months (Jun-Aug)',
-                data: [0, 0, 0, 0, 0, 52800, 58724, 32000, 0, 0, 0, 0],
-                backgroundColor: '#e74c3c',
-                borderColor: '#c0392b',
-                borderWidth: 1
-            }, {
-                label: 'Non-Summer Months',
-                data: [3200, 2800, 4100, 3500, 4800, 0, 0, 0, 3900, 4200, 2100, 2900],
-                backgroundColor: '#3498db',
-                borderColor: '#2980b9',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Total Weather Delay Minutes by Month'
-                },
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Total Weather Delay (Minutes)'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                }
-            }
-        }
+// Close mobile menu when clicking on a link
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
     });
-}
-
-function createAvgWeatherDelayChart() {
-    const ctx = document.getElementById('avgWeatherDelayChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Weather Delay per Flight',
-                data: [0.4, 0.3, 0.5, 0.4, 0.6, 7.2, 8.1, 4.8, 0.5, 0.6, 0.3, 0.4],
-                borderColor: '#27ae60',
-                backgroundColor: 'rgba(39, 174, 96, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Weather Delay per Flight by Month'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Avg Weather Delay per Flight (Minutes)'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Story 2: Holiday Charts
-function createHolidayVolumeChart() {
-    const ctx = document.getElementById('holidayVolumeChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Normal Days', 'Thanksgiving Week'],
-            datasets: [{
-                label: 'Average Flights per Day',
-                data: [41, 146],
-                backgroundColor: ['#3498db', '#f39c12'],
-                borderColor: ['#2980b9', '#e67e22'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Daily Flight Volume: Thanksgiving Week vs Normal Operations'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Flights per Day'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createHolidayDelayChart() {
-    const ctx = document.getElementById('holidayDelayChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Normal Operations', 'Thanksgiving Week'],
-            datasets: [{
-                label: 'Average Delay (Minutes)',
-                data: [11.92, 4.96],
-                backgroundColor: ['#3498db', '#f39c12'],
-                borderColor: ['#2980b9', '#e67e22'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Departure Delay: Thanksgiving Week vs Normal Operations'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Delay (Minutes)'
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Story 3: Duration Charts
-function createDurationVolumeChart() {
-    const ctx = document.getElementById('durationVolumeChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Short-haul\n(<2h)', 'Medium-haul\n(2-4h)', 'Long-haul\n(4-6h)', 'Ultra-long\n(6h+)'],
-            datasets: [{
-                label: 'Number of Flights',
-                data: [49451, 27829, 14101, 1269],
-                backgroundColor: ['#74b9ff', '#0984e3', '#2d3436', '#636e72'],
-                borderColor: ['#0984e3', '#74b9ff', '#2d3436', '#636e72'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Flight Volume by Duration Category'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Flights'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Flight Category'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createDurationDelayChart() {
-    const ctx = document.getElementById('durationDelayChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Short-haul\n(<2h)', 'Medium-haul\n(2-4h)', 'Long-haul\n(4-6h)', 'Ultra-long\n(6h+)'],
-            datasets: [{
-                label: 'Average Delay (Minutes)',
-                data: [11.2, 12.8, 11.5, 9.8],
-                backgroundColor: ['#fd7f6f', '#ffb347', '#77dd77', '#84b6f4'],
-                borderColor: ['#ff6b6b', '#ffa726', '#66bb6a', '#42a5f5'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Delay by Flight Duration'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Delay (Minutes)'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Flight Category'
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Story 4: Business Travel Charts
-function createWeekdayDelayChart() {
-    const ctx = document.getElementById('weekdayDelayChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Average Delay (Minutes)',
-                data: [11.2, 11.8, 11.5, 12.1, 13.14, 10.8, 10.2],
-                backgroundColor: ['#f39c12', '#3498db', '#3498db', '#3498db', '#e74c3c', '#3498db', '#3498db'],
-                borderColor: ['#e67e22', '#2980b9', '#2980b9', '#2980b9', '#c0392b', '#2980b9', '#2980b9'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Delay by Day of Week'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Delay (Minutes)'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createWeekdayVolumeChart() {
-    const ctx = document.getElementById('weekdayVolumeChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Daily Flight Volume',
-                data: [14800, 14200, 14100, 14300, 14500, 10200, 10550],
-                backgroundColor: '#27ae60',
-                borderColor: '#229954',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Flight Volume by Day of Week'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Flights'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createHourlyPatternsChart() {
-    const ctx = document.getElementById('hourlyPatternsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'],
-            datasets: [{
-                label: 'Weekdays',
-                data: [8.2, 7.5, 8.8, 9.2, 10.5, 11.8, 12.2, 12.8, 14.2, 15.1, 13.8, 11.2],
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                borderWidth: 3,
-                fill: false,
-                tension: 0.4
-            }, {
-                label: 'Weekends',
-                data: [7.1, 6.8, 7.2, 8.1, 8.8, 9.2, 9.8, 10.1, 10.8, 11.2, 10.5, 9.1],
-                borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                borderWidth: 3,
-                fill: false,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Delay by Hour: Weekdays vs Weekends'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Delay (Minutes)'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Departure Hour'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createBusinessPeakChart() {
-    const ctx = document.getElementById('businessPeakChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Mon Morning\n(6-10 AM)', 'Fri Evening\n(4-8 PM)', 'Overall Average'],
-            datasets: [{
-                label: 'Average Delay (Minutes)',
-                data: [3.05, 13.08, 11.70],
-                backgroundColor: ['#3498db', '#e74c3c', '#95a5a6'],
-                borderColor: ['#2980b9', '#c0392b', '#7f8c8d'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Business Travel Peak Comparison'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Delay (Minutes)'
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Story 5: COVID Impact Charts
-function createCovidVolumeChart() {
-    const ctx = document.getElementById('covidVolumeChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
-            datasets: [{
-                label: 'COVID Year (2020)',
-                data: [0, 0, 0, 6102, 0, 0, 0, 0],
-                backgroundColor: '#e74c3c',
-                borderColor: '#c0392b',
-                borderWidth: 2
-            }, {
-                label: 'Normal Operations',
-                data: [12850, 13200, 13580, 0, 13200, 13400, 13950, 13850],
-                backgroundColor: '#3498db',
-                borderColor: '#2980b9',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Annual Flight Volume at IAD'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Flights'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Year'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createRecoveryTrendChart() {
-    const ctx = document.getElementById('recoveryTrendChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
-            datasets: [{
-                label: 'Flight Volume Trend',
-                data: [12850, 13200, 13580, 6102, 13200, 13400, 13950, 13850],
-                borderColor: '#27ae60',
-                backgroundColor: 'rgba(39, 174, 96, 0.1)',
-                borderWidth: 4,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 6,
-                pointHoverRadius: 8
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'IAD Flight Volume Recovery Trend'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Flights'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Year'
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Story 6: Tech Corridor Charts
-function createTechDestinationsChart() {
-    const ctx = document.getElementById('techDestinationsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['SFO', 'LAX', 'SEA', 'SJC', 'OAK', 'BUR', 'PDX'],
-            datasets: [{
-                label: 'Number of Flights',
-                data: [8325, 4250, 3800, 1580, 850, 420, 217],
-                backgroundColor: '#9b59b6',
-                borderColor: '#8e44ad',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Flight Volume to West Coast Tech Hubs'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Flights'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Destination'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createTechDelayComparisonChart() {
-    const ctx = document.getElementById('techDelayComparisonChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['West Coast Tech', 'Other Destinations'],
-            datasets: [{
-                label: 'Average Delay (Minutes)',
-                data: [12.26, 11.70],
-                backgroundColor: ['#9b59b6', '#95a5a6'],
-                borderColor: ['#8e44ad', '#7f8c8d'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Average Delays: Tech Corridor vs Others'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Average Delay (Minutes)'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createTechYearlyTrendChart() {
-    const ctx = document.getElementById('techYearlyTrendChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
-            datasets: [{
-                label: 'Annual Tech Flights',
-                data: [2850, 2920, 3100, 1180, 2850, 2950, 3180, 3362],
-                borderColor: '#9b59b6',
-                backgroundColor: 'rgba(155, 89, 182, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Tech Corridor Flight Volume Trend'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Annual Flights'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Year'
-                    }
-                }
-            }
-        }
-    });
-}
-
-function createTechWeekdayChart() {
-    const ctx = document.getElementById('techWeekdayChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Number of Flights',
-                data: [2931, 2821, 2754, 2806, 2890, 2115, 2125],
-                backgroundColor: ['#2c3e50', '#74b9ff', '#74b9ff', '#74b9ff', '#2c3e50', '#74b9ff', '#74b9ff'],
-                borderColor: ['#34495e', '#0984e3', '#0984e3', '#0984e3', '#34495e', '#0984e3', '#0984e3'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Tech Corridor Flights by Day'
-                },
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Flights'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Day of Week'
-                    }
-                }
-            }
-        }
-    });
-}
+});
 
 // Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        if (targetSection) {
+            const offsetTop = targetSection.offsetTop - 80;
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
             });
         }
     });
 });
+
+// Navbar background on scroll
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.15)';
+    } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+    }
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe story sections and cards
+document.addEventListener('DOMContentLoaded', () => {
+    const elementsToAnimate = [
+        '.story-section',
+        '.stat-card',
+        '.insight-card',
+        '.method-card',
+        '.story-image'
+    ];
+
+    elementsToAnimate.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            element.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(element);
+        });
+    });
+});
+
+// Counter animation for stats
+const animateCounter = (element, target, duration = 2000) => {
+    let current = 0;
+    const increment = target / (duration / 16);
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+
+        // Format numbers appropriately
+        if (target >= 1000) {
+            element.textContent = Math.floor(current).toLocaleString();
+        } else {
+            element.textContent = current.toFixed(1);
+        }
+    }, 16);
+};
+
+// Trigger counter animations when stats are visible
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumber = entry.target.querySelector('.stat-number');
+            const text = statNumber.textContent;
+
+            // Extract number from text
+            const match = text.match(/[\d,]+\.?\d*/);
+            if (match) {
+                const number = parseFloat(match[0].replace(/,/g, ''));
+                statNumber.textContent = '0';
+                setTimeout(() => {
+                    animateCounter(statNumber, number);
+                }, 300);
+            }
+
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+// Observe stat cards
+document.addEventListener('DOMContentLoaded', () => {
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach(card => {
+        statsObserver.observe(card);
+    });
+});
+
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+
+    if (hero && heroContent) {
+        const rate = scrolled * -0.5;
+        heroContent.style.transform = `translateY(${rate}px)`;
+    }
+});
+
+// Image lazy loading with fade in effect
+const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.8s ease-in-out';
+
+            const tempImg = new Image();
+            tempImg.onload = () => {
+                img.style.opacity = '1';
+            };
+            tempImg.src = img.src;
+
+            imageObserver.unobserve(img);
+        }
+    });
+}, { threshold: 0.1 });
+
+// Observe story images
+document.addEventListener('DOMContentLoaded', () => {
+    const storyImages = document.querySelectorAll('.story-image');
+    storyImages.forEach(img => {
+        imageObserver.observe(img);
+    });
+});
+
+// Smooth reveal animation for insight items
+const insightObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const items = entry.target.querySelectorAll('.insight-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, index * 150);
+            });
+            insightObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+
+// Observe insights containers
+document.addEventListener('DOMContentLoaded', () => {
+    const insightsContainers = document.querySelectorAll('.insights');
+    insightsContainers.forEach(container => {
+        const items = container.querySelectorAll('.insight-item');
+        items.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+        insightObserver.observe(container);
+    });
+});
+
+// CTA button hover effects
+document.addEventListener('DOMContentLoaded', () => {
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            button.style.transform = 'translateY(-3px) scale(1.02)';
+        });
+
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+
+// Active navigation highlighting
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.clientHeight;
+
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Add active class styles dynamically
+const style = document.createElement('style');
+style.textContent = `
+    .nav-link.active {
+        color: #667eea !important;
+        background: rgba(102, 126, 234, 0.15) !important;
+        font-weight: 600 !important;
+    }
+`;
+document.head.appendChild(style);
+
+// Key finding highlight animation
+const keyFindingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.animation = 'pulse 2s ease-in-out';
+            keyFindingObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.7 });
+
+// Add pulse animation
+const pulseStyle = document.createElement('style');
+pulseStyle.textContent = `
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+`;
+document.head.appendChild(pulseStyle);
+
+// Observe key findings
+document.addEventListener('DOMContentLoaded', () => {
+    const keyFindings = document.querySelectorAll('.key-finding');
+    keyFindings.forEach(finding => {
+        keyFindingObserver.observe(finding);
+    });
+});
+
+// Tooltip functionality for enhanced interactivity
+const createTooltip = (element, text) => {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = text;
+    tooltip.style.cssText = `
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1000;
+        white-space: nowrap;
+    `;
+
+    document.body.appendChild(tooltip);
+
+    element.addEventListener('mouseenter', (e) => {
+        tooltip.style.opacity = '1';
+        tooltip.style.left = e.pageX + 10 + 'px';
+        tooltip.style.top = e.pageY - 40 + 'px';
+    });
+
+    element.addEventListener('mousemove', (e) => {
+        tooltip.style.left = e.pageX + 10 + 'px';
+        tooltip.style.top = e.pageY - 40 + 'px';
+    });
+
+    element.addEventListener('mouseleave', () => {
+        tooltip.style.opacity = '0';
+    });
+};
+
+// Add tooltips to stat cards
+document.addEventListener('DOMContentLoaded', () => {
+    const statCards = document.querySelectorAll('.stat-card');
+    const tooltips = [
+        'Total flight records analyzed from IAD departures',
+        'Complete analysis period covering 7+ years of data',
+        'Average departure delay across all flights',
+        'Unique destination airports served from IAD'
+    ];
+
+    statCards.forEach((card, index) => {
+        if (tooltips[index]) {
+            createTooltip(card, tooltips[index]);
+        }
+    });
+});
+
+// Accessibility improvements
+document.addEventListener('DOMContentLoaded', () => {
+    // Add skip link
+    const skipLink = document.createElement('a');
+    skipLink.href = '#hero';
+    skipLink.textContent = 'Skip to main content';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: #667eea;
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 1001;
+        transition: top 0.3s ease;
+    `;
+
+    skipLink.addEventListener('focus', () => {
+        skipLink.style.top = '6px';
+    });
+
+    skipLink.addEventListener('blur', () => {
+        skipLink.style.top = '-40px';
+    });
+
+    document.body.insertBefore(skipLink, document.body.firstChild);
+
+    // Add ARIA labels
+    const navToggle = document.getElementById('hamburger');
+    if (navToggle) {
+        navToggle.setAttribute('aria-label', 'Toggle navigation menu');
+        navToggle.setAttribute('role', 'button');
+    }
+
+    // Add focus management for mobile menu
+    const mobileMenu = document.getElementById('nav-menu');
+    if (mobileMenu) {
+        mobileMenu.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                hamburger.focus();
+            }
+        });
+    }
+});
+
+console.log('🚀 IAD Flight Analysis website loaded successfully!');
+console.log('📊 Interactive features initialized:');
+console.log('   ✓ Smooth scrolling navigation');
+console.log('   ✓ Mobile responsive menu');
+console.log('   ✓ Scroll animations and parallax effects');
+console.log('   ✓ Counter animations for statistics');
+console.log('   ✓ Image lazy loading');
+console.log('   ✓ Interactive tooltips');
+console.log('   ✓ Accessibility enhancements');

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAD Airport Analysis: Six Data-Driven Stories</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-plane"></i>
+                <h1>IAD Flight Analysis</h1>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item"><a href="#hero" class="nav-link">Overview</a></li>
+                <li class="nav-item"><a href="#weather" class="nav-link">Weather</a></li>
+                <li class="nav-item"><a href="#holidays" class="nav-link">Holidays</a></li>
+                <li class="nav-item"><a href="#routes" class="nav-link">Routes</a></li>
+                <li class="nav-item"><a href="#business" class="nav-link">Business</a></li>
+                <li class="nav-item"><a href="#covid" class="nav-link">COVID</a></li>
+                <li class="nav-item"><a href="#tech" class="nav-link">Tech Corridor</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Washington Dulles International Airport</h1>
+                <h2 class="hero-subtitle">Flight Delay Analysis: Six Data-Driven Stories</h2>
+                <p class="hero-description">
+                    Comprehensive analysis of <strong>92,650 flights</strong> from Washington's gateway to the world,
+                    revealing compelling patterns in delay behaviors, operational efficiency, and external impacts from 2017-2024.
+                </p>
+                <div class="hero-cta">
+                    <a href="#weather" class="cta-button primary">Explore Stories</a>
+                    <a href="#methodology" class="cta-button secondary">Methodology</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="airport-illustration">
+                    <i class="fas fa-plane-departure"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 class="stat-number">92,650</h3>
+                <p class="stat-label">Total Flights Analyzed</p>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                <h3 class="stat-number">2017-2024</h3>
+                <p class="stat-label">Analysis Period</p>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <h3 class="stat-number">11.70 min</h3>
+                <p class="stat-label">Average Delay</p>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3 class="stat-number">61</h3>
+                <p class="stat-label">Destinations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story 1: Weather -->
+    <section id="weather" class="story-section weather-section">
+        <div class="container">
+            <div class="story-header">
+                <div class="story-icon">🌩️</div>
+                <h2 class="story-title">Summer Storm Season</h2>
+                <h3 class="story-subtitle">Weather Chaos at the Capital's Gateway</h3>
+            </div>
+
+            <div class="story-content">
+                <div class="story-text">
+                    <div class="key-finding">
+                        <h4>Key Finding</h4>
+                        <p>Summer weather delays are <strong>11.8x higher</strong> than non-summer months</p>
+                    </div>
+
+                    <div class="insights">
+                        <div class="insight-item">
+                            <div class="insight-icon">⚡</div>
+                            <div>
+                                <h5>July/August Impact</h5>
+                                <p>Peak weather delay months with 52,859 and 66,227 total delay minutes</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">📊</div>
+                            <div>
+                                <h5>Summer vs Winter</h5>
+                                <p>2.51 minutes per flight in summer vs 0.21 minutes in non-summer months</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🔥</div>
+                            <div>
+                                <h5>Worst Weather Day</h5>
+                                <p>August 29, 2024: 6,949 delay minutes from weather alone</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-insight">
+                        <h5>Deep Insight</h5>
+                        <p>Washington DC's notorious thunderstorm season creates a perfect storm of delays that ripple through the entire national aviation system. IAD's position as a major hub means these weather disruptions cascade across the country, affecting connections and creating operational chaos that extends far beyond the immediate storm area.</p>
+                    </div>
+                </div>
+
+                <div class="story-visual">
+                    <img src="story1_weather_patterns.png" alt="Weather delay patterns showing dramatic summer peaks" class="story-image">
+                    <div class="image-caption">
+                        Summer months (June-August) show dramatically higher weather delays, with August being the peak month for weather-related disruptions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story 2: Holidays -->
+    <section id="holidays" class="story-section holiday-section">
+        <div class="container">
+            <div class="story-header">
+                <div class="story-icon">🦃</div>
+                <h2 class="story-title">Holiday Travel Paradox</h2>
+                <h3 class="story-subtitle">Thanksgiving Week Efficiency</h3>
+            </div>
+
+            <div class="story-content">
+                <div class="story-visual">
+                    <img src="story2_holiday_patterns.png" alt="Holiday travel showing surprising efficiency during Thanksgiving" class="story-image">
+                    <div class="image-caption">
+                        Contrary to expectations, Thanksgiving week shows significantly better performance than normal operations.
+                    </div>
+                </div>
+
+                <div class="story-text">
+                    <div class="key-finding surprise">
+                        <h4>Surprising Finding</h4>
+                        <p>Thanksgiving week has <strong>2.5x LOWER</strong> delays than normal operations</p>
+                    </div>
+
+                    <div class="insights">
+                        <div class="insight-item">
+                            <div class="insight-icon">📈</div>
+                            <div>
+                                <h5>Performance Comparison</h5>
+                                <p>4.85 minutes average delay during Thanksgiving vs 12.10 minutes normally</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">✈️</div>
+                            <div>
+                                <h5>Flight Volume</h5>
+                                <p>3,592 flights during Thanksgiving weeks vs 89,058 normal operations</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🎯</div>
+                            <div>
+                                <h5>Operational Excellence</h5>
+                                <p>Reduced business traffic creates smoother operations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-insight">
+                        <h5>Operational Insight</h5>
+                        <p>This counterintuitive finding reveals that holiday periods actually improve operational efficiency at IAD. With reduced business travel and more predictable leisure travel patterns, airlines can optimize schedules and reduce the complexity that typically drives delays during normal business operations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story 3: Routes -->
+    <section id="routes" class="story-section routes-section">
+        <div class="container">
+            <div class="story-header">
+                <div class="story-icon">✈️</div>
+                <h2 class="story-title">Long-Haul Advantage</h2>
+                <h3 class="story-subtitle">Duration-Based Delay Patterns</h3>
+            </div>
+
+            <div class="story-content">
+                <div class="story-text">
+                    <div class="key-finding">
+                        <h4>Key Finding</h4>
+                        <p>Ultra-long flights (6+ hours) have the <strong>lowest average delays</strong> at 17.54 minutes</p>
+                    </div>
+
+                    <div class="insights">
+                        <div class="insight-item">
+                            <div class="insight-icon">🏖️</div>
+                            <div>
+                                <h5>Hawaii Routes</h5>
+                                <p>447 ultra-long flights, primarily to Honolulu (HNL)</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">⭐</div>
+                            <div>
+                                <h5>Priority Treatment</h5>
+                                <p>Longer flights receive operational priority and buffer time</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🎯</div>
+                            <div>
+                                <h5>Hub Strategy</h5>
+                                <p>IAD's focus on international/long-haul routes shows in delay management</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-insight">
+                        <h5>Strategic Insight</h5>
+                        <p>IAD's operational philosophy clearly prioritizes long-haul international flights, reflecting its role as Washington's international gateway. These flights receive preferential treatment in scheduling and ground operations, resulting in better on-time performance despite their complexity.</p>
+                    </div>
+                </div>
+
+                <div class="story-visual">
+                    <img src="story3_duration_patterns.png" alt="Flight duration analysis showing long-haul advantages" class="story-image">
+                    <div class="image-caption">
+                        Flight volume by duration category and corresponding delay patterns reveal the operational priority given to longer flights.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story 4: Business Travel -->
+    <section id="business" class="story-section business-section">
+        <div class="container">
+            <div class="story-header">
+                <div class="story-icon">💼</div>
+                <h2 class="story-title">Friday Evening Crunch</h2>
+                <h3 class="story-subtitle">Business Travel Asymmetry</h3>
+            </div>
+
+            <div class="story-content">
+                <div class="story-visual">
+                    <img src="story4_business_patterns.png" alt="Business travel patterns showing Friday evening peaks" class="story-image">
+                    <div class="image-caption">
+                        Weekly patterns reveal the asymmetric nature of business travel, with Friday evening showing dramatic delay increases.
+                    </div>
+                </div>
+
+                <div class="story-text">
+                    <div class="key-finding">
+                        <h4>Key Finding</h4>
+                        <p>Friday evening delays are <strong>4.3x higher</strong> than Monday morning</p>
+                    </div>
+
+                    <div class="insights">
+                        <div class="insight-item">
+                            <div class="insight-icon">🌅</div>
+                            <div>
+                                <h5>Monday Morning Rush</h5>
+                                <p>4,915 flights, 5.15 min average delay (6-10 AM)</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🌆</div>
+                            <div>
+                                <h5>Friday Evening Chaos</h5>
+                                <p>4,776 flights, 22.31 min average delay (4-8 PM)</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🏛️</div>
+                            <div>
+                                <h5>Capital Connections</h5>
+                                <p>Top routes: ATL (6,086), LAX (5,210), SFO (5,010) weekday flights</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-insight">
+                        <h5>Business Cycle Insight</h5>
+                        <p>Washington DC's unique position as the nation's capital creates predictable weekly travel patterns. Government officials, lobbyists, and contractors fly out Friday evenings to return home, creating a massive operational challenge that doesn't exist in typical business markets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story 5: COVID Impact -->
+    <section id="covid" class="story-section covid-section">
+        <div class="container">
+            <div class="story-header">
+                <div class="story-icon">🦠</div>
+                <h2 class="story-title">COVID-19 Aviation Crisis</h2>
+                <h3 class="story-subtitle">Resilience and Recovery</h3>
+            </div>
+
+            <div class="story-content">
+                <div class="story-text">
+                    <div class="key-finding impact">
+                        <h4>Impact Assessment</h4>
+                        <p><strong>54% flight reduction</strong> in 2020, followed by <strong>103% recovery</strong> by 2021-2024</p>
+                    </div>
+
+                    <div class="insights">
+                        <div class="insight-item">
+                            <div class="insight-icon">📉</div>
+                            <div>
+                                <h5>2020 Crisis</h5>
+                                <p>Dramatic reduction during pandemic lockdowns</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">📈</div>
+                            <div>
+                                <h5>Strong Recovery</h5>
+                                <p>Post-COVID operations exceed pre-pandemic levels</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🌍</div>
+                            <div>
+                                <h5>International Gateway</h5>
+                                <p>IAD's role as international hub showed remarkable resilience</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-insight">
+                        <h5>Resilience Insight</h5>
+                        <p>IAD's recovery trajectory demonstrates the strength of Washington DC as a destination and the airport's strategic importance. The fact that post-pandemic operations exceed pre-COVID levels indicates both pent-up demand and the airport's enhanced operational efficiency.</p>
+                    </div>
+                </div>
+
+                <div class="story-visual">
+                    <img src="story5_covid_impact.png" alt="COVID impact and recovery timeline" class="story-image">
+                    <div class="image-caption">
+                        The dramatic impact of COVID-19 on flight volumes and the subsequent robust recovery trajectory.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story 6: Tech Corridor -->
+    <section id="tech" class="story-section tech-section">
+        <div class="container">
+            <div class="story-header">
+                <div class="story-icon">🔧</div>
+                <h2 class="story-title">West Coast Tech Corridor</h2>
+                <h3 class="story-subtitle">Government-Silicon Valley Pipeline</h3>
+            </div>
+
+            <div class="story-content">
+                <div class="story-visual">
+                    <img src="story6_tech_corridor.png" alt="Tech corridor analysis showing government-Silicon Valley connections" class="story-image">
+                    <div class="image-caption">
+                        The strong connectivity between DC's government sector and West Coast innovation centers, with Monday peaks suggesting business collaboration.
+                    </div>
+                </div>
+
+                <div class="story-text">
+                    <div class="key-finding">
+                        <h4>Key Finding</h4>
+                        <p><strong>21% of all IAD flights</strong> serve the West Coast tech corridor</p>
+                    </div>
+
+                    <div class="insights">
+                        <div class="insight-item">
+                            <div class="insight-icon">🌉</div>
+                            <div>
+                                <h5>San Francisco Dominance</h5>
+                                <p>SFO leads with 6,941 flights, representing the strongest tech connection</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">📊</div>
+                            <div>
+                                <h5>Performance Metrics</h5>
+                                <p>12.26 min average delay (slightly higher than overall 11.70 min)</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🤝</div>
+                            <div>
+                                <h5>Monday Peak Business</h5>
+                                <p>Peak travel suggests government-tech sector collaboration patterns</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-insight">
+                        <h5>Economic Corridor Insight</h5>
+                        <p>This data reveals the invisible infrastructure connecting America's political capital with its innovation centers. The Monday peak suggests government officials and contractors regularly travel to Silicon Valley for technology partnerships, regulation discussions, and innovation initiatives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section id="methodology" class="methodology-section">
+        <div class="container">
+            <h2 class="section-title">Methodology & Data Quality</h2>
+
+            <div class="methodology-grid">
+                <div class="method-card">
+                    <div class="method-icon"><i class="fas fa-database"></i></div>
+                    <h3>Dataset Characteristics</h3>
+                    <ul>
+                        <li><strong>92,650 departure records</strong></li>
+                        <li><strong>July 2017 - December 2024</strong></li>
+                        <li><strong>61 unique destinations</strong></li>
+                        <li><strong>5 major carriers</strong> (UA, DL, WN, AA, AS)</li>
+                        <li><strong>No missing critical fields</strong></li>
+                    </ul>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Analysis Approach</h3>
+                    <ul>
+                        <li><strong>Temporal Analysis:</strong> Year, month, day-of-week patterns</li>
+                        <li><strong>Route Analysis:</strong> Destination-based delay patterns</li>
+                        <li><strong>External Factors:</strong> Weather, holidays, crisis events</li>
+                        <li><strong>Statistical Validation:</strong> Mean, median, standard deviation</li>
+                        <li><strong>Trend Identification:</strong> Multi-year pattern recognition</li>
+                    </ul>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Technical Implementation</h3>
+                    <ul>
+                        <li><strong>Python:</strong> pandas, numpy, matplotlib, seaborn</li>
+                        <li><strong>Jupyter Notebook:</strong> Comprehensive documentation</li>
+                        <li><strong>Data Processing:</strong> Date parsing, feature engineering</li>
+                        <li><strong>Visualization:</strong> Statistical charts and trend analysis</li>
+                        <li><strong>Web Dashboard:</strong> Interactive presentation layer</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Insights Summary -->
+    <section id="insights" class="insights-summary">
+        <div class="container">
+            <h2 class="section-title">Key Insights Summary</h2>
+
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-number">1</div>
+                    <h3>Weather Dominance</h3>
+                    <p>Summer months drive the majority of weather-related delays, with July and August being particularly challenging.</p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">2</div>
+                    <h3>Holiday Efficiency</h3>
+                    <p>Counter-intuitive better performance during Thanksgiving reveals the impact of reduced business complexity.</p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">3</div>
+                    <h3>Route Strategy</h3>
+                    <p>Long-haul flights receive operational priority, reflecting IAD's international gateway strategy.</p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">4</div>
+                    <h3>Business Cycles</h3>
+                    <p>Friday evening creates weekly operational peaks driven by Washington's unique government travel patterns.</p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">5</div>
+                    <h3>Crisis Resilience</h3>
+                    <p>Strong recovery from COVID-19 disruption demonstrates IAD's strategic importance and operational resilience.</p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">6</div>
+                    <h3>Economic Corridors</h3>
+                    <p>Strong connectivity between government and tech sectors reveals the infrastructure of American innovation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IAD Flight Analysis</h3>
+                    <p>Comprehensive analysis of Washington Dulles International Airport flight operations, revealing data-driven insights about delays, patterns, and operational efficiency.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Analysis Period</h4>
+                    <p>July 2017 - December 2024</p>
+                    <p>92,650 flight records analyzed</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Methodology</h4>
+                    <p>Python-based statistical analysis</p>
+                    <p>Jupyter notebook documentation</p>
+                    <p>Interactive web visualization</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 IAD Flight Analysis. Data-driven insights for aviation excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
