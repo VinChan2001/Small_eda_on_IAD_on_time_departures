@@ -18,6 +18,8 @@ This project analyzes **92,650 flights** from Washington Dulles International Ai
 ### 🌩️ Story 1: Summer Storm Season - Weather Chaos at the Capital's Gateway
 **Key Finding**: Summer weather delays are **11.8x higher** than non-summer months
 
+![Weather Patterns Analysis](story1_weather_patterns.png)
+
 - **July/August Impact**: Peak weather delay months with 52,859 and 66,227 total delay minutes
 - **Average Summer Delay**: 2.51 minutes per flight vs 0.21 minutes in non-summer months
 - **Worst Weather Day**: August 29, 2024 (6,949 delay minutes from weather)
@@ -26,6 +28,8 @@ This project analyzes **92,650 flights** from Washington Dulles International Ai
 ### 🦃 Story 2: Holiday Travel Paradox - Thanksgiving Week Efficiency
 **Surprising Finding**: Thanksgiving week has **2.5x LOWER** delays than normal operations
 
+![Holiday Patterns Analysis](story2_holiday_patterns.png)
+
 - **Thanksgiving Week Average**: 4.85 minutes delay
 - **Normal Operations Average**: 12.10 minutes delay
 - **Volume**: 3,592 flights during Thanksgiving weeks vs 89,058 normal flights
@@ -33,6 +37,8 @@ This project analyzes **92,650 flights** from Washington Dulles International Ai
 
 ### ✈️ Story 3: Long-Haul Advantage - Duration-Based Delay Patterns
 **Key Finding**: Ultra-long flights (6+ hours) have the **lowest average delays** at 17.54 minutes
+
+![Flight Duration Analysis](story3_duration_patterns.png)
 
 - **Flight Categories**:
   - Short-haul (<2h): Majority of operations
@@ -43,6 +49,8 @@ This project analyzes **92,650 flights** from Washington Dulles International Ai
 ### 💼 Story 4: Friday Evening Crunch - Business Travel Asymmetry
 **Key Finding**: Friday evening delays are **4.3x higher** than Monday morning
 
+![Business Travel Patterns](story4_business_patterns.png)
+
 - **Monday Morning Rush** (6-10 AM): 4,915 flights, 5.15 min average delay
 - **Friday Evening Rush** (4-8 PM): 4,776 flights, 22.31 min average delay
 - **Peak Delay Day**: Friday (13.69 minutes average)
@@ -52,6 +60,8 @@ This project analyzes **92,650 flights** from Washington Dulles International Ai
 ### 🦠 Story 5: COVID-19 Aviation Crisis - Resilience and Recovery
 **Impact**: **54% flight reduction** in 2020, followed by **103% recovery** by 2021-2024
 
+![COVID Impact Analysis](story5_covid_impact.png)
+
 - **Pre-COVID Average**: ~12,000 flights/year (2017-2019)
 - **2020 Impact**: Dramatic reduction during pandemic
 - **Recovery**: Post-COVID operations exceed pre-pandemic levels
@@ -59,6 +69,8 @@ This project analyzes **92,650 flights** from Washington Dulles International Ai
 
 ### 🔧 Story 6: West Coast Tech Corridor - Government-Silicon Valley Pipeline
 **Key Finding**: **21% of all IAD flights** go to West Coast tech hubs
+
+![Tech Corridor Analysis](story6_tech_corridor.png)
 
 - **Total Tech Flights**: 19,867 flights to SFO, LAX, SEA, SJC, OAK, BUR, PDX
 - **Top Destination**: SFO with 6,941 flights
@@ -75,6 +87,12 @@ eda_project/
 ├── index.html                                          # Interactive web dashboard
 ├── styles.css                                          # Dashboard styling
 ├── scripts.js                                          # Dashboard interactivity
+├── story1_weather_patterns.png                         # Weather delay visualization
+├── story2_holiday_patterns.png                         # Holiday travel analysis
+├── story3_duration_patterns.png                        # Flight duration analysis
+├── story4_business_patterns.png                        # Business travel patterns
+├── story5_covid_impact.png                             # COVID impact visualization
+├── story6_tech_corridor.png                            # Tech corridor analysis
 └── README.md                                           # This file
 ```
 
