@@ -1,232 +1,74 @@
-// DOM Elements
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('nav-menu');
-const navLinks = document.querySelectorAll('.nav-link');
+// ==========================================================================
+//   IAD Flight Analysis - Interactive JavaScript
+// ==========================================================================
 
-// Mobile Navigation Toggle
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNavigation();
+    initializeAnimations();
+    initializeCharts();
+    initializeStoryTabs();
+    initializeModal();
+    initializeScrollEffects();
+    loadVisualizationData();
 });
 
-// Close mobile menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
+// ==========================================================================
+// Navigation Functions
+// ==========================================================================
 
-// Smooth scrolling for navigation links
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
+function initializeNavigation() {
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-        if (targetSection) {
-            const offsetTop = targetSection.offsetTop - 80;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Navbar background on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    }
-});
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe story sections and cards
-document.addEventListener('DOMContentLoaded', () => {
-    const elementsToAnimate = [
-        '.story-section',
-        '.stat-card',
-        '.insight-card',
-        '.method-card',
-        '.story-image'
-    ];
-
-    elementsToAnimate.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach((element, index) => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            element.style.transitionDelay = `${index * 0.1}s`;
-            observer.observe(element);
-        });
-    });
-});
-
-// Counter animation for stats
-const animateCounter = (element, target, duration = 2000) => {
-    let current = 0;
-    const increment = target / (duration / 16);
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            current = target;
-            clearInterval(timer);
-        }
-
-        // Format numbers appropriately
-        if (target >= 1000) {
-            element.textContent = Math.floor(current).toLocaleString();
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
         } else {
-            element.textContent = current.toFixed(1);
+            navbar.classList.remove('scrolled');
         }
-    }, 16);
-};
+    });
 
-// Trigger counter animations when stats are visible
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const statNumber = entry.target.querySelector('.stat-number');
-            const text = statNumber.textContent;
+    // Mobile menu toggle
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
 
-            // Extract number from text
-            const match = text.match(/[\d,]+\.?\d*/);
-            if (match) {
-                const number = parseFloat(match[0].replace(/,/g, ''));
-                statNumber.textContent = '0';
-                setTimeout(() => {
-                    animateCounter(statNumber, number);
-                }, 300);
+    // Smooth scrolling for navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Close mobile menu
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
             }
-
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-// Observe stat cards
-document.addEventListener('DOMContentLoaded', () => {
-    const statCards = document.querySelectorAll('.stat-card');
-    statCards.forEach(card => {
-        statsObserver.observe(card);
-    });
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const heroContent = document.querySelector('.hero-content');
-
-    if (hero && heroContent) {
-        const rate = scrolled * -0.5;
-        heroContent.style.transform = `translateY(${rate}px)`;
-    }
-});
-
-// Image lazy loading with fade in effect
-const imageObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.style.opacity = '0';
-            img.style.transition = 'opacity 0.8s ease-in-out';
-
-            const tempImg = new Image();
-            tempImg.onload = () => {
-                img.style.opacity = '1';
-            };
-            tempImg.src = img.src;
-
-            imageObserver.unobserve(img);
-        }
-    });
-}, { threshold: 0.1 });
-
-// Observe story images
-document.addEventListener('DOMContentLoaded', () => {
-    const storyImages = document.querySelectorAll('.story-image');
-    storyImages.forEach(img => {
-        imageObserver.observe(img);
-    });
-});
-
-// Smooth reveal animation for insight items
-const insightObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const items = entry.target.querySelectorAll('.insight-item');
-            items.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateX(0)';
-                }, index * 150);
-            });
-            insightObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.3 });
-
-// Observe insights containers
-document.addEventListener('DOMContentLoaded', () => {
-    const insightsContainers = document.querySelectorAll('.insights');
-    insightsContainers.forEach(container => {
-        const items = container.querySelectorAll('.insight-item');
-        items.forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateX(-20px)';
-            item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        });
-        insightObserver.observe(container);
-    });
-});
-
-// CTA button hover effects
-document.addEventListener('DOMContentLoaded', () => {
-    const ctaButtons = document.querySelectorAll('.cta-button');
-    ctaButtons.forEach(button => {
-        button.addEventListener('mouseenter', () => {
-            button.style.transform = 'translateY(-3px) scale(1.02)';
-        });
-
-        button.addEventListener('mouseleave', () => {
-            button.style.transform = 'translateY(0) scale(1)';
         });
     });
-});
 
-// Active navigation highlighting
-window.addEventListener('scroll', () => {
+    // Active navigation highlighting
+    window.addEventListener('scroll', updateActiveNavigation);
+}
+
+function updateActiveNavigation() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
 
     let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionHeight = section.clientHeight;
 
-        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= (sectionTop - 200)) {
             current = section.getAttribute('id');
         }
     });
@@ -237,156 +79,825 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
-});
+}
 
-// Add active class styles dynamically
-const style = document.createElement('style');
-style.textContent = `
-    .nav-link.active {
-        color: #667eea !important;
-        background: rgba(102, 126, 234, 0.15) !important;
-        font-weight: 600 !important;
-    }
-`;
-document.head.appendChild(style);
+// ==========================================================================
+// Animation Functions
+// ==========================================================================
 
-// Key finding highlight animation
-const keyFindingObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = 'pulse 2s ease-in-out';
-            keyFindingObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.7 });
-
-// Add pulse animation
-const pulseStyle = document.createElement('style');
-pulseStyle.textContent = `
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.02); }
-    }
-`;
-document.head.appendChild(pulseStyle);
-
-// Observe key findings
-document.addEventListener('DOMContentLoaded', () => {
-    const keyFindings = document.querySelectorAll('.key-finding');
-    keyFindings.forEach(finding => {
-        keyFindingObserver.observe(finding);
-    });
-});
-
-// Tooltip functionality for enhanced interactivity
-const createTooltip = (element, text) => {
-    const tooltip = document.createElement('div');
-    tooltip.className = 'tooltip';
-    tooltip.textContent = text;
-    tooltip.style.cssText = `
-        position: absolute;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 1000;
-        white-space: nowrap;
-    `;
-
-    document.body.appendChild(tooltip);
-
-    element.addEventListener('mouseenter', (e) => {
-        tooltip.style.opacity = '1';
-        tooltip.style.left = e.pageX + 10 + 'px';
-        tooltip.style.top = e.pageY - 40 + 'px';
-    });
-
-    element.addEventListener('mousemove', (e) => {
-        tooltip.style.left = e.pageX + 10 + 'px';
-        tooltip.style.top = e.pageY - 40 + 'px';
-    });
-
-    element.addEventListener('mouseleave', () => {
-        tooltip.style.opacity = '0';
-    });
-};
-
-// Add tooltips to stat cards
-document.addEventListener('DOMContentLoaded', () => {
-    const statCards = document.querySelectorAll('.stat-card');
-    const tooltips = [
-        'Total flight records analyzed from IAD departures',
-        'Complete analysis period covering 7+ years of data',
-        'Average departure delay across all flights',
-        'Unique destination airports served from IAD'
-    ];
-
-    statCards.forEach((card, index) => {
-        if (tooltips[index]) {
-            createTooltip(card, tooltips[index]);
-        }
-    });
-});
-
-// Accessibility improvements
-document.addEventListener('DOMContentLoaded', () => {
-    // Add skip link
-    const skipLink = document.createElement('a');
-    skipLink.href = '#hero';
-    skipLink.textContent = 'Skip to main content';
-    skipLink.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 6px;
-        background: #667eea;
-        color: white;
-        padding: 8px;
-        text-decoration: none;
-        border-radius: 4px;
-        z-index: 1001;
-        transition: top 0.3s ease;
-    `;
-
-    skipLink.addEventListener('focus', () => {
-        skipLink.style.top = '6px';
-    });
-
-    skipLink.addEventListener('blur', () => {
-        skipLink.style.top = '-40px';
-    });
-
-    document.body.insertBefore(skipLink, document.body.firstChild);
-
-    // Add ARIA labels
-    const navToggle = document.getElementById('hamburger');
-    if (navToggle) {
-        navToggle.setAttribute('aria-label', 'Toggle navigation menu');
-        navToggle.setAttribute('role', 'button');
-    }
-
-    // Add focus management for mobile menu
-    const mobileMenu = document.getElementById('nav-menu');
-    if (mobileMenu) {
-        mobileMenu.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                hamburger.focus();
-            }
+function initializeAnimations() {
+    // Initialize AOS (Animate On Scroll)
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
         });
     }
+
+    // Counter animation for statistics
+    animateCounters();
+
+    // Parallax effect for hero section
+    initializeParallax();
+}
+
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+
+    const animateCounter = (counter) => {
+        const target = parseFloat(counter.textContent);
+        const increment = target / 100;
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = formatCounterValue(target);
+                clearInterval(timer);
+            } else {
+                counter.textContent = formatCounterValue(current);
+            }
+        }, 20);
+    };
+
+    // Trigger animation when counters come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+}
+
+function formatCounterValue(value) {
+    if (value >= 1000) {
+        return (value / 1000).toFixed(1) + 'K';
+    }
+    return Math.floor(value).toString();
+}
+
+function initializeParallax() {
+    const heroContent = document.querySelector('.hero-content');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+
+        if (heroContent) {
+            heroContent.style.transform = `translateY(${rate}px)`;
+        }
+    });
+}
+
+// ==========================================================================
+// Chart Functions
+// ==========================================================================
+
+function initializeCharts() {
+    // COVID Impact Chart
+    createCovidChart();
+
+    // Economic Correlation Chart
+    createEconomicChart();
+
+    // Operational Efficiency Chart
+    createOperationalChart();
+
+    // Temporal Patterns Chart
+    createTemporalChart();
+}
+
+function createCovidChart() {
+    const ctx = document.getElementById('covidChart');
+    if (!ctx) return;
+
+    const data = {
+        labels: ['Pre-COVID', 'COVID Period', 'Recovery'],
+        datasets: [{
+            label: 'Average Daily Flights',
+            data: [99.3, 45.5, 107.7],
+            backgroundColor: [
+                'rgba(34, 197, 94, 0.7)',
+                'rgba(239, 68, 68, 0.7)',
+                'rgba(59, 130, 246, 0.7)'
+            ],
+            borderColor: [
+                'rgb(34, 197, 94)',
+                'rgb(239, 68, 68)',
+                'rgb(59, 130, 246)'
+            ],
+            borderWidth: 2
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createEconomicChart() {
+    const ctx = document.getElementById('economicChart');
+    if (!ctx) return;
+
+    const data = {
+        labels: ['GDP Growth', 'Unemployment', 'Consumer Confidence'],
+        datasets: [{
+            label: 'Correlation with Flight Volume',
+            data: [0.701, -0.426, 0.643],
+            backgroundColor: [
+                'rgba(34, 197, 94, 0.7)',
+                'rgba(239, 68, 68, 0.7)',
+                'rgba(6, 182, 212, 0.7)'
+            ],
+            borderColor: [
+                'rgb(34, 197, 94)',
+                'rgb(239, 68, 68)',
+                'rgb(6, 182, 212)'
+            ],
+            borderWidth: 2
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        usePointStyle: true
+                    }
+                }
+            }
+        }
+    });
+}
+
+function createOperationalChart() {
+    const ctx = document.getElementById('operationalChart');
+    if (!ctx) return;
+
+    const data = {
+        labels: ['Low Volume', 'Medium Volume', 'High Volume'],
+        datasets: [{
+            label: 'Average Delay (minutes)',
+            data: [5.1, 10.7, 16.4],
+            backgroundColor: 'rgba(245, 158, 11, 0.7)',
+            borderColor: 'rgb(245, 158, 11)',
+            borderWidth: 2,
+            fill: true
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            elements: {
+                point: {
+                    radius: 6,
+                    hoverRadius: 8
+                },
+                line: {
+                    tension: 0.4
+                }
+            }
+        }
+    });
+}
+
+function createTemporalChart() {
+    const ctx = document.getElementById('temporalChart');
+    if (!ctx) return;
+
+    const data = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+            label: 'Average Monthly Flights',
+            data: [93.2, 94.1, 95.8, 94.7, 95.4, 96.1, 96.3, 96.7, 95.9, 94.8, 93.4, 92.1],
+            backgroundColor: 'rgba(6, 182, 212, 0.3)',
+            borderColor: 'rgb(6, 182, 212)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    min: 90,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            elements: {
+                point: {
+                    radius: 4,
+                    hoverRadius: 6
+                }
+            }
+        }
+    });
+}
+
+// ==========================================================================
+// Story Tab Functions
+// ==========================================================================
+
+function initializeStoryTabs() {
+    const storyTabs = document.querySelectorAll('.story-tab');
+    const storyPanels = document.querySelectorAll('.story-panel');
+
+    storyTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetStory = this.getAttribute('data-story');
+
+            // Remove active class from all tabs and panels
+            storyTabs.forEach(t => t.classList.remove('active'));
+            storyPanels.forEach(p => p.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding panel
+            this.classList.add('active');
+            const targetPanel = document.getElementById(`story-${targetStory}`);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        });
+    });
+}
+
+// ==========================================================================
+// Modal Functions
+// ==========================================================================
+
+function initializeModal() {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Close modal when clicking the X
+    closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+function openModal(imageSrc) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+
+    modal.style.display = 'block';
+    modalImg.src = imageSrc;
+
+    // Add loading effect
+    modalImg.style.opacity = '0';
+    modalImg.onload = function() {
+        modalImg.style.opacity = '1';
+    };
+}
+
+// ==========================================================================
+// Scroll Effects
+// ==========================================================================
+
+function initializeScrollEffects() {
+    // Progress bar
+    createProgressBar();
+
+    // Scroll to top button
+    createScrollToTopButton();
+
+    // Section animations
+    initializeSectionAnimations();
+}
+
+function createProgressBar() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        z-index: 1001;
+        transition: width 0.3s ease;
+    `;
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', function() {
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.scrollY / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+}
+
+function createScrollToTopButton() {
+    const scrollBtn = document.createElement('button');
+    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #2563eb;
+        color: white;
+        border: none;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    `;
+    document.body.appendChild(scrollBtn);
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+            scrollBtn.style.opacity = '1';
+            scrollBtn.style.visibility = 'visible';
+        } else {
+            scrollBtn.style.opacity = '0';
+            scrollBtn.style.visibility = 'hidden';
+        }
+    });
+
+    scrollBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+function initializeSectionAnimations() {
+    const sections = document.querySelectorAll('section');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('section-visible');
+                animateSectionContent(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+}
+
+function animateSectionContent(section) {
+    const cards = section.querySelectorAll('.overview-card, .insight-card, .recommendation-card');
+
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.transform = 'translateY(0)';
+            card.style.opacity = '1';
+        }, index * 100);
+    });
+}
+
+// ==========================================================================
+// Data Visualization Functions
+// ==========================================================================
+
+function loadVisualizationData() {
+    // Simulate loading real data (in a real application, this would fetch from APIs)
+    const insights = {
+        covidImpact: {
+            maxDrop: -54.2,
+            recoveryLevel: 108.4,
+            timeToRecover: 18 // months
+        },
+        economicCorrelation: {
+            gdpCorrelation: 0.701,
+            unemploymentCorrelation: -0.426,
+            consumerConfidenceCorrelation: 0.643
+        },
+        operationalEfficiency: {
+            congestionPenalty: 11.3,
+            volumeDelayCorrelation: 0.301,
+            peakHourDelays: 16.4
+        },
+        temporalPatterns: {
+            seasonalVariation: 4.9,
+            peakMonth: 'August',
+            busiestDay: 'Monday'
+        }
+    };
+
+    // Update dynamic content
+    updateDynamicContent(insights);
+
+    // Create interactive visualizations
+    createInteractiveCharts(insights);
+}
+
+function updateDynamicContent(insights) {
+    // Update metric values throughout the page
+    const metricElements = document.querySelectorAll('[data-metric]');
+
+    metricElements.forEach(element => {
+        const metric = element.getAttribute('data-metric');
+        const value = getNestedValue(insights, metric);
+
+        if (value !== undefined) {
+            element.textContent = formatMetricValue(value, metric);
+        }
+    });
+}
+
+function getNestedValue(obj, path) {
+    return path.split('.').reduce((current, key) => current && current[key], obj);
+}
+
+function formatMetricValue(value, metric) {
+    if (metric.includes('correlation')) {
+        return value.toFixed(3);
+    } else if (metric.includes('percentage') || metric.includes('variation')) {
+        return value.toFixed(1) + '%';
+    } else if (metric.includes('penalty') || metric.includes('delays')) {
+        return value.toFixed(1) + ' min';
+    }
+    return value.toString();
+}
+
+function createInteractiveCharts(insights) {
+    // Create advanced visualizations using Plotly
+    createTimeSeriesChart();
+    createCorrelationHeatmap();
+    createRecoveryTimeline();
+}
+
+function createTimeSeriesChart() {
+    const container = document.getElementById('timeseries-chart');
+    if (!container) return;
+
+    // Sample time series data
+    const dates = generateDateRange('2017-07-01', '2024-12-31');
+    const flightCounts = generateFlightData(dates);
+
+    const trace = {
+        x: dates,
+        y: flightCounts,
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Daily Flights',
+        line: {
+            color: '#2563eb',
+            width: 2
+        }
+    };
+
+    const layout = {
+        title: 'Flight Volume Over Time',
+        xaxis: { title: 'Date' },
+        yaxis: { title: 'Daily Flights' },
+        margin: { t: 40, r: 40, b: 40, l: 60 }
+    };
+
+    if (typeof Plotly !== 'undefined') {
+        Plotly.newPlot(container, [trace], layout, {responsive: true});
+    }
+}
+
+function createCorrelationHeatmap() {
+    const container = document.getElementById('correlation-heatmap');
+    if (!container) return;
+
+    const data = [{
+        z: [
+            [1.0, 0.701, -0.426, 0.643],
+            [0.701, 1.0, -0.523, 0.789],
+            [-0.426, -0.523, 1.0, -0.634],
+            [0.643, 0.789, -0.634, 1.0]
+        ],
+        x: ['Flights', 'GDP', 'Unemployment', 'Confidence'],
+        y: ['Flights', 'GDP', 'Unemployment', 'Confidence'],
+        type: 'heatmap',
+        colorscale: 'RdBu'
+    }];
+
+    const layout = {
+        title: 'Economic-Aviation Correlation Matrix',
+        margin: { t: 40, r: 40, b: 100, l: 100 }
+    };
+
+    if (typeof Plotly !== 'undefined') {
+        Plotly.newPlot(container, data, layout, {responsive: true});
+    }
+}
+
+function createRecoveryTimeline() {
+    const container = document.getElementById('recovery-timeline');
+    if (!container) return;
+
+    // Recovery milestones
+    const milestones = [
+        { date: '2020-03-15', event: 'COVID Declaration', value: 100 },
+        { date: '2020-04-01', event: 'Lockdown Peak', value: 45 },
+        { date: '2021-07-01', event: 'Vaccination Rollout', value: 70 },
+        { date: '2022-01-01', event: 'Recovery Phase', value: 95 },
+        { date: '2024-01-01', event: 'Full Recovery', value: 108 }
+    ];
+
+    const trace = {
+        x: milestones.map(m => m.date),
+        y: milestones.map(m => m.value),
+        mode: 'lines+markers',
+        type: 'scatter',
+        name: 'Recovery Progress',
+        line: { color: '#059669', width: 3 },
+        marker: { size: 8, color: '#059669' },
+        text: milestones.map(m => m.event),
+        textposition: 'top center'
+    };
+
+    const layout = {
+        title: 'COVID Recovery Timeline',
+        xaxis: { title: 'Date' },
+        yaxis: { title: 'Recovery Level (%)' },
+        margin: { t: 40, r: 40, b: 40, l: 60 }
+    };
+
+    if (typeof Plotly !== 'undefined') {
+        Plotly.newPlot(container, [trace], layout, {responsive: true});
+    }
+}
+
+// ==========================================================================
+// Utility Functions
+// ==========================================================================
+
+function generateDateRange(start, end) {
+    const dates = [];
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        dates.push(new Date(d).toISOString().split('T')[0]);
+    }
+
+    return dates;
+}
+
+function generateFlightData(dates) {
+    // Generate realistic flight data with COVID impact
+    return dates.map((date, index) => {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = d.getMonth();
+
+        let baseFlights = 95;
+
+        // COVID impact
+        if (year === 2020 && month >= 2) {
+            baseFlights *= (month >= 3 && month <= 6) ? 0.4 : 0.7;
+        } else if (year === 2021 && month <= 6) {
+            baseFlights *= 0.8;
+        } else if (year >= 2022) {
+            baseFlights *= 1.08;
+        }
+
+        // Seasonal variation
+        const seasonalFactor = 1 + 0.1 * Math.sin((month * Math.PI) / 6);
+
+        // Weekly pattern
+        const dayOfWeek = d.getDay();
+        const weeklyFactor = dayOfWeek === 0 || dayOfWeek === 6 ? 0.85 : 1.1;
+
+        // Random variation
+        const randomFactor = 0.9 + Math.random() * 0.2;
+
+        return Math.round(baseFlights * seasonalFactor * weeklyFactor * randomFactor);
+    });
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// ==========================================================================
+// Performance Optimization
+// ==========================================================================
+
+// Lazy loading for images
+function initializeLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Optimize scroll events
+const optimizedScrollHandler = throttle(() => {
+    updateActiveNavigation();
+}, 100);
+
+window.addEventListener('scroll', optimizedScrollHandler);
+
+// ==========================================================================
+// Error Handling
+// ==========================================================================
+
+window.addEventListener('error', function(e) {
+    console.error('JavaScript Error:', e.error);
+    // Could implement error reporting here
 });
 
-console.log('🚀 IAD Flight Analysis website loaded successfully!');
-console.log('📊 Interactive features initialized:');
-console.log('   ✓ Smooth scrolling navigation');
-console.log('   ✓ Mobile responsive menu');
-console.log('   ✓ Scroll animations and parallax effects');
-console.log('   ✓ Counter animations for statistics');
-console.log('   ✓ Image lazy loading');
-console.log('   ✓ Interactive tooltips');
-console.log('   ✓ Accessibility enhancements');
+// Handle Chart.js loading errors
+window.addEventListener('load', function() {
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js not loaded - charts will not display');
+        // Could show fallback static images
+    }
+
+    if (typeof Plotly === 'undefined') {
+        console.warn('Plotly not loaded - advanced charts will not display');
+    }
+});
+
+// ==========================================================================
+// Accessibility Enhancements
+// ==========================================================================
+
+// Keyboard navigation for tabs
+document.addEventListener('keydown', function(e) {
+    const focusedElement = document.activeElement;
+
+    if (focusedElement.classList.contains('story-tab')) {
+        const tabs = Array.from(document.querySelectorAll('.story-tab'));
+        const currentIndex = tabs.indexOf(focusedElement);
+
+        let targetIndex;
+
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            targetIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
+            e.preventDefault();
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            targetIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
+            e.preventDefault();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+            focusedElement.click();
+            e.preventDefault();
+        }
+
+        if (targetIndex !== undefined) {
+            tabs[targetIndex].focus();
+        }
+    }
+});
+
+// Announce dynamic content changes for screen readers
+function announceToScreenReader(message) {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.className = 'sr-only';
+    announcement.textContent = message;
+
+    document.body.appendChild(announcement);
+
+    setTimeout(() => {
+        document.body.removeChild(announcement);
+    }, 1000);
+}
+
+// ==========================================================================
+// Export functions for global use
+// ==========================================================================
+
+window.openModal = openModal;
+
+// Initialize everything when the page loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('IAD Flight Analysis website initialized successfully');
+    });
+} else {
+    console.log('IAD Flight Analysis website initialized successfully');
+}
