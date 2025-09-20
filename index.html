@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAD Airport Flight Delay Analysis - Data-Driven Stories</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>IAD Flight Analysis</h1>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#overview" class="nav-link">Overview</a></li>
+                <li class="nav-item"><a href="#story1" class="nav-link">Weather</a></li>
+                <li class="nav-item"><a href="#story2" class="nav-link">Holidays</a></li>
+                <li class="nav-item"><a href="#story3" class="nav-link">Routes</a></li>
+                <li class="nav-item"><a href="#story4" class="nav-link">Business Travel</a></li>
+                <li class="nav-item"><a href="#story5" class="nav-link">COVID Impact</a></li>
+                <li class="nav-item"><a href="#story6" class="nav-link">Tech Corridor</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="overview" class="hero-section">
+            <div class="container">
+                <h1>Washington Dulles International Airport</h1>
+                <h2>Flight Delay Analysis: Six Data-Driven Stories</h2>
+                <p class="hero-description">
+                    Comprehensive analysis of 92,650 flights from Washington Dulles International Airport (2017-2024), 
+                    revealing the complex dynamics of this major aviation hub through temporal trends, route patterns, 
+                    and external factors that drive delay variations.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>92,650</h3>
+                        <p>Total Flights Analyzed</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>2017-2024</h3>
+                        <p>Analysis Period</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>11.70 min</h3>
+                        <p>Average Delay</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>6</h3>
+                        <p>Data-Driven Stories</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story1" class="story-section">
+            <div class="container">
+                <h2>Story 1: Summer Storm Season</h2>
+                <h3>Weather Chaos at the Capital's Gateway</h3>
+                
+                <div class="story-content">
+                    <div class="story-description">
+                        <p>
+                            IAD experiences significantly higher weather-related delays during summer months (June-August) 
+                            due to the Washington DC area's notorious thunderstorm season, creating operational chaos 
+                            that ripples through the national aviation system.
+                        </p>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Total Weather Delay Minutes by Month</h4>
+                            <canvas id="weatherDelayChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Average Weather Delay per Flight by Month</h4>
+                            <canvas id="avgWeatherDelayChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="key-findings">
+                        <h4>Key Findings</h4>
+                        <ul>
+                            <li>Summer weather delays are <strong>11.8x higher</strong> than non-summer months</li>
+                            <li>Summer weather impact: <strong>143,524 total delay minutes</strong> across 22,754 flights</li>
+                            <li>Average weather delay per summer flight: <strong>6.31 minutes</strong></li>
+                            <li>Average weather delay per non-summer flight: <strong>0.53 minutes</strong></li>
+                            <li>July and August create operational chaos with peak weather delays</li>
+                            <li>IAD's location in the DC area makes it vulnerable to East Coast thunderstorm patterns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story2" class="story-section">
+            <div class="container">
+                <h2>Story 2: Holiday Travel Paradox</h2>
+                <h3>Thanksgiving Week Efficiency</h3>
+                
+                <div class="story-content">
+                    <div class="story-description">
+                        <p>
+                            Contrary to expectations, the week of Thanksgiving shows better operational performance 
+                            than normal periods, with reduced business traffic and optimized holiday schedules 
+                            improving overall efficiency at IAD.
+                        </p>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Average Daily Flight Volume</h4>
+                            <canvas id="holidayVolumeChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Average Departure Delay Comparison</h4>
+                            <canvas id="holidayDelayChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="key-findings">
+                        <h4>Key Findings</h4>
+                        <ul>
+                            <li>Thanksgiving week has <strong>2.5x LOWER delays</strong> than normal operations</li>
+                            <li>Thanksgiving week flights: <strong>1,018 total flights</strong></li>
+                            <li>Average daily flights during Thanksgiving week: <strong>146</strong></li>
+                            <li>Average daily flights during normal operations: <strong>41</strong></li>
+                            <li>Thanksgiving week average delay: <strong>4.96 minutes</strong></li>
+                            <li>Normal operations average delay: <strong>11.92 minutes</strong></li>
+                            <li>Christmas season average delay: <strong>10.37 minutes</strong> (4,177 flights)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story3" class="story-section">
+            <div class="container">
+                <h2>Story 3: Long-Haul Advantage</h2>
+                <h3>Flight Duration Impact on Delays</h3>
+                
+                <div class="story-content">
+                    <div class="story-description">
+                        <p>
+                            Ultra-long flights (6+ hours) demonstrate the lowest average delays, primarily due to 
+                            priority treatment, built-in buffer time, and the dominance of Hawaii routes in this category.
+                        </p>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Flight Volume by Duration Category</h4>
+                            <canvas id="durationVolumeChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Average Delay by Flight Duration</h4>
+                            <canvas id="durationDelayChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="key-findings">
+                        <h4>Key Findings</h4>
+                        <ul>
+                            <li>Ultra-long flights (6+ hours) have the <strong>lowest average delays: 9.81 minutes</strong></li>
+                            <li>Ultra-long-haul flights: <strong>1,269 flights</strong> (primarily to Hawaii)</li>
+                            <li>Most common long-haul destination: <strong>HNL (Honolulu)</strong></li>
+                            <li>Short-haul flights dominate IAD operations: <strong>49,451/92,650 flights</strong></li>
+                            <li>Longer flights receive priority treatment and have built-in buffer time</li>
+                            <li>International coordination requirements create more predictable scheduling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story4" class="story-section">
+            <div class="container">
+                <h2>Story 4: Business Travel Patterns</h2>
+                <h3>Weekly Cycles from the Nation's Capital</h3>
+                
+                <div class="story-content">
+                    <div class="story-description">
+                        <p>
+                            As the gateway from the nation's capital, IAD shows distinct weekday patterns, with Friday 
+                            evenings experiencing the highest delays as government officials, lobbyists, and business 
+                            travelers return from the week's activities.
+                        </p>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Average Delay by Day of Week</h4>
+                            <canvas id="weekdayDelayChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Flight Volume by Day of Week</h4>
+                            <canvas id="weekdayVolumeChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Hourly Delay Patterns: Weekdays vs Weekends</h4>
+                            <canvas id="hourlyPatternsChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Business Travel Peak Comparison</h4>
+                            <canvas id="businessPeakChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="key-findings">
+                        <h4>Key Findings</h4>
+                        <ul>
+                            <li>Friday has the highest average delays: <strong>13.14 minutes</strong></li>
+                            <li>Monday morning rush (6-10 AM): <strong>985 flights</strong>, 3.05 min avg delay</li>
+                            <li>Friday evening rush (4-8 PM): <strong>1,088 flights</strong>, 13.08 min avg delay</li>
+                            <li>Friday evening delays are <strong>4.3x higher</strong> than Monday morning</li>
+                            <li>Top business destination from IAD: <strong>ATL with 1,796 weekday flights</strong></li>
+                            <li>Capital region's government/business cycle drives predictable congestion patterns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story5" class="story-section">
+            <div class="container">
+                <h2>Story 5: COVID-19 Aviation Crisis</h2>
+                <h3>The 2020 Collapse and Remarkable Recovery</h3>
+                
+                <div class="story-content">
+                    <div class="story-description">
+                        <p>
+                            The COVID-19 pandemic dramatically impacted IAD operations in 2020, with flight volumes 
+                            plummeting by 54%. However, IAD demonstrated remarkable resilience, with post-COVID operations 
+                            exceeding pre-pandemic levels by 2021-2024.
+                        </p>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Annual Flight Volume at IAD</h4>
+                            <canvas id="covidVolumeChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>IAD Flight Volume Recovery Trend</h4>
+                            <canvas id="recoveryTrendChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="key-findings">
+                        <h4>Key Findings</h4>
+                        <ul>
+                            <li>2020 (COVID) flights: <strong>6,102 total</strong></li>
+                            <li>Pre-COVID average: <strong>13,212 flights/year</strong></li>
+                            <li>COVID impact: <strong>54% reduction</strong> in 2020</li>
+                            <li>Post-COVID average: <strong>13,584 flights/year</strong></li>
+                            <li>Recovery status: <strong>103% of pre-COVID levels</strong></li>
+                            <li>IAD's role as an international gateway made it particularly resilient</li>
+                            <li>Post-pandemic operations now exceed historical levels</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story6" class="story-section">
+            <div class="container">
+                <h2>Story 6: West Coast Tech Corridor</h2>
+                <h3>The Digital Migration Route</h3>
+                
+                <div class="story-content">
+                    <div class="story-description">
+                        <p>
+                            IAD serves as a critical link between Washington DC's government sector and West Coast tech hubs, 
+                            with these routes showing distinct patterns related to government-tech business connections and 
+                            slightly higher delays than average.
+                        </p>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <h4>Flight Volume to West Coast Tech Hubs</h4>
+                            <canvas id="techDestinationsChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Average Delays: Tech Corridor vs Others</h4>
+                            <canvas id="techDelayComparisonChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Tech Corridor Flight Volume Trend</h4>
+                            <canvas id="techYearlyTrendChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <h4>Tech Corridor Flights by Day</h4>
+                            <canvas id="techWeekdayChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="key-findings">
+                        <h4>Key Findings</h4>
+                        <ul>
+                            <li>Total tech corridor flights: <strong>19,442 (21% of all IAD flights)</strong></li>
+                            <li>Top tech destination: <strong>SFO with 8,325 flights</strong></li>
+                            <li>Tech route average delay: <strong>12.26 minutes</strong></li>
+                            <li>Other routes average delay: <strong>11.70 minutes</strong></li>
+                            <li>Tech routes are <strong>WORSE than average</strong> by 0.56 minutes</li>
+                            <li>Peak tech travel days: <strong>Monday (2,931 flights)</strong></li>
+                            <li>Tech corridor COVID impact: <strong>61.8% reduction</strong> in 2020</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="summary-section">
+            <div class="container">
+                <h2>Executive Summary</h2>
+                <p>
+                    Based on our comprehensive analysis of 92,650 flights from Washington Dulles International Airport (2017-2024), 
+                    we've uncovered six compelling stories that reveal the complex dynamics of this major aviation hub. These findings 
+                    demonstrate how external factors (weather, pandemics, business cycles) interact with IAD's unique position as the 
+                    capital's primary international gateway, creating distinct operational patterns that airlines and passengers can 
+                    anticipate and plan around.
+                </p>
+                
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h3>Summer Storm Season</h3>
+                        <p>11.8x higher weather delays in summer months due to DC thunderstorm patterns</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Holiday Efficiency</h3>
+                        <p>2.5x lower delays during Thanksgiving week due to optimized scheduling</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Long-Haul Priority</h3>
+                        <p>Ultra-long flights have lowest delays (9.81 min) with priority treatment</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Friday Crunch</h3>
+                        <p>4.3x higher delays on Friday evenings vs Monday mornings</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>COVID Recovery</h3>
+                        <p>54% reduction in 2020, but 103% recovery exceeding pre-pandemic levels</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Tech Corridor</h3>
+                        <p>21% of flights to West Coast tech hubs with Monday peak travel</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 IAD Flight Delay Analysis. Data source: Combined Data_Detailed_Statistics_Departures.csv</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
